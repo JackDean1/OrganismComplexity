@@ -153,10 +153,7 @@ master_table[["all_species"]] <- rbind(master_table[["hsapiens"]], master_table[
 master_table[["all_species"]][is.na(master_table[["all_species"]])] <- 0
 # Add 1 to each paralogue so that the gene is counted as a paralogue
 master_table[["all_species"]]$Number_of_paralogues <- master_table$all_species[, "Number_of_paralogues"] + 1
-
-View(complexity_score)
-
-
+                       
 # Work out complexity score
 complexity_score <- master_table[["all_species"]] # Make complexity score dataframe 
 complexity_score$log_paralogues <- log2(complexity_score[, 5]) # log paralogues
@@ -218,7 +215,7 @@ functional_diversity <- complexity_score[, c("Human_Gene_Name", "Species", "Func
 gene_corr <- functional_diversity %>%
   left_join(ctn_df) %>%
   group_by(Human_Gene_Name) %>%
-  summarise(cor(Functional_Diversity, CTN)) # https://www.youtube.com/watch?v=DiflCZDncOE
+  summarise(cor(Functional_Diversity, CTN)) 
 # Add to correlation to converted table
 complexity_spread <- merge(complexity_spread, gene_corr, by = c("Human_Gene_Name"), all.x = TRUE)
 complexity_spread <- merge(complexity_spread, complexity_species[["hsapiens"]][, c("Human_Gene_Name", "Ensembl_Gene_ID")], all.x = TRUE)
